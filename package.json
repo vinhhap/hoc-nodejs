@@ -1,0 +1,23 @@
+{
+  "name": "techmaster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^3.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinhhap/hoc-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinhhap/hoc-nodejs/issues"
+  },
+  "homepage": "https://github.com/vinhhap/hoc-nodejs#readme"
+}
