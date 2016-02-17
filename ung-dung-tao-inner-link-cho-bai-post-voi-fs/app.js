@@ -1,24 +1,33 @@
-var fs = require('fs'),
-    data = {'node': 'http://techmaster.vn/khoa-hoc/25480/nodejs-truc-tuyen',
-            'php' : 'http://techmaster.vn/khoa-hoc/8229/lap-trinh-phalcon-php-2'};
-
-var replaceData = function(someFile) {
-  fs.readFile(someFile, 'utf8', function(err, result) {
-    if(err) return console.log(err);
-    var word1 = result.match(/(^|\W)Node($|\W)/g),
-        word2 = result.match(/(^|\W)PHP($|\W)/g),
-        word1Num = Math.floor(word1.length * 0.3),
-        word2Num = Math.floor(word2.length * 0.3);
-    for(var i = 1; i <= word1Num; i++) {
-      result = result.replace(/(^|\W)Node($|\W)/, ' <a href="' + data.node + '">NODE</a> ');
-    }
-    for(var n = 1; n <= word2Num; n++) {
-      result = result.replace(/(^|\W)PHP($|\W)/, ' <a href="' + data.php + '">Php</a> ');
-    }
-    fs.writeFile(someFile, result, 'utf8', function(err) {
-      if(err) return console.log(err);
-      console.log("DONE!");
-    });
-  });
+var fs = require("fs");
+var data1 = {
+  'php': 'http://techmaster.vn/khoa-hoc/8229/lap-trinh-phalcon-php-2',
+  'node' : 'http://techmaster.vn/khoa-hoc/25480/nodejs-truc-tuyen'
 };
-replaceData('demo.html');
+var randomIntFromInterval =  function(min,max) {
+  return Math.floor(Math.random()*(max-min+1)+min);
+};
+
+fs.readFile("index.html", "utf8", function(err, data) {
+  if(err) return console.log(err);
+  var replaceInnerLink = function(text, searchWord, replaceWord) {
+    var dataArr = text.split(" ");
+    var allPositions = [];
+    var numToReplace;
+    var randomPosition;
+    for(var i = 0; i < dataArr.length; i++) {
+      if(dataArr[i] === searchWord) allPositions.push(i);
+    }
+    console.log(allPositions.length);
+    numToReplace = Math.floor(allPositions.length / 3);
+    console.log(numToReplace);
+    for(var n = 1; n <= numToReplace; n++) {
+      randomPosition = randomIntFromInterval(0, dataArr.length);
+      console.log(randomPosition);
+      dataArr[randomPosition] = replaceWord;
+    }
+    return dataArr.join(" ");
+  };
+  var result1 = replaceInnerLink(data, "Node.js", "<a href='" + data1.node + "'>Node.js</a>");
+  var result2 = replaceInnerLink(result1, "PHP", "<a href='" + data1.php + "'>PHP</a>");
+  fs.writeFileSync("index.html", result2);
+});
